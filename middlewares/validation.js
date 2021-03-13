@@ -4,8 +4,8 @@ const validator = require('validator');
 const validateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).messages({
-      'string-min': 'Минимум 2 символа',
-      'string-max': 'Максимум 30 символов',
+      min: 'Минимум 2 символа',
+      max: 'Максимум 30 символов',
     }),
     email: Joi.string().required().custom((value, helper) => {
       if (validator.isEmail(value)) {
@@ -35,6 +35,9 @@ const validateMovie = celebrate({
         return value;
       }
       return helper.message('Невалидный URL');
+    }),
+    movieId: Joi.number().messages({
+      unique: 'Фильм с таким movieId уже есть',
     }),
   }).unknown(true),
 });
