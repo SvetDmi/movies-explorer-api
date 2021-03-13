@@ -39,16 +39,16 @@ const validateMovie = celebrate({
   }).unknown(true),
 });
 
-// const validateId = celebrate({
-//   params: Joi.object().keys({
-//     id: Joi.string().required().custom((value, helper) => {
-//       if (validator.isMongoId(value)) {
-//         return value;
-//       }
-//       return helper.message('Невалидный URL');
-//     }),
-//   }),
-// });
+const validateId = celebrate({
+  params: Joi.object().keys({
+    movieId: Joi.string().required().custom((value, helper) => {
+      if (validator.isMongoId(value)) {
+        return value;
+      }
+      return helper.message('Невалидный URL');
+    }),
+  }),
+});
 
 // const validateId = celebrate({
 //   params: Joi.object().keys({
@@ -63,5 +63,5 @@ const validateMovie = celebrate({
 // });
 
 module.exports = {
-  validateUser, validateMovie,
+  validateUser, validateMovie, validateId
 };

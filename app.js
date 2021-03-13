@@ -14,7 +14,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const { mongoAdress, mongoObject } = require('./utils/mongo');
 const { appListen } = require('./utils/answers');
 
-const { PORT = 3002 } = process.env;
+const { PORT = 4000 } = process.env;
 const app = express();
 
 mongoose.connect(mongoAdress, mongoObject);

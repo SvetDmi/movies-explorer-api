@@ -50,7 +50,7 @@ const getMovies = (req, res, next) => {
 };
 
 const deleteMovie = (req, res, next) => {
-  Movie.findByIdAndRemove(req.body._id)
+  Movie.findByIdAndRemove(req.params.movieId)
     .then((movie) => {
       if (!movie) {
         throw new ErrorNotFound404(movieNotFound);
