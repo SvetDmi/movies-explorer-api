@@ -10,17 +10,15 @@ const limiter = require('./utils/limiter');
 
 const routes = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const errorHandler = require('./middlewares/errorHandler');
+const { mongoAdress, mongoObject } = require('./utils/mongo');
+const { appListen } = require('./utils/answers');
 
-const { PORT = 3000 } = process.env;
-// const { PORT = 3002 } = process.env;
+const { PORT = 3002 } = process.env;
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoAdress, mongoObject);
+
 app.use(cors());
 app.use(requestLogger);
 app.use(limiter);
@@ -33,16 +31,8 @@ app.use(express.json());
 app.use(routes);
 app.use(errorLogger);
 app.use(errors());
-// app.use(errorHandler);
+app.use(errorHandler);
+
 app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
+  console.log(appListen, PORT);
 });
-
-// app.use(() => {
-//   throw new ErrorNotFound404('Запрашиваемый ресурс не найден');
-// });
-
-
-
-
-
