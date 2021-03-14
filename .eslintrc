@@ -12,6 +12,7 @@
       }
         ],
     "no-console": "off",
+    "no-unused-vars": "off",
     "arrow-body-style": ["error", "as-needed"]
   }
 }

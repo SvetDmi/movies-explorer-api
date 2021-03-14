@@ -1,17 +1,44 @@
 const { celebrate, Joi } = require('celebrate');
 const validator = require('validator');
 
+const validateAuth = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30)
+      .messages({
+        'string.min': 'Минимум 2 символа',
+        'string.max': 'Максимум 30 символов',
+        'any.required': 'Незаполнено обязательное поле',
+      }),
+    email: Joi.string().required()
+      .messages({
+        'any.required': 'Незаполнено обязательное поле',
+      })
+      .custom((value, helper) => {
+        if (validator.isEmail(value)) {
+          return value;
+        }
+        return helper.message('Невалидный email');
+      }),
+
+    password: Joi.string().required().messages({
+      'any.required': 'Незаполнено обязательное поле',
+    }),
+  }),
+});
+
 const validateUser = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30).messages({
-      min: 'Минимум 2 символа',
-      max: 'Максимум 30 символов',
-    }),
-    email: Joi.string().required().custom((value, helper) => {
-      if (validator.isEmail(value)) {
-        return value;
-      }
-      return helper.message('Невалидный email');
+    email: Joi.string().required().messages({
+      'any.required': 'Незаполнено обязательное поле',
+    })
+      .custom((value, helper) => {
+        if (validator.isEmail(value)) {
+          return value;
+        }
+        return helper.message('Невалидный email');
+      }),
+    password: Joi.string().required().messages({
+      'any.required': 'Незаполнено обязательное поле',
     }),
   }).unknown(true),
 });
@@ -37,9 +64,39 @@ const validateMovie = celebrate({
       return helper.message('Невалидный URL');
     }),
     movieId: Joi.number().messages({
-      unique: 'Фильм с таким movieId уже есть',
+      'any.required': 'Незаполнено обязательное поле',
     }),
-  }).unknown(true),
+    country: Joi.string().required().messages({
+      'any.required': 'Незаполнено обязательное поле',
+    }),
+    director: Joi.string().required().messages({
+      'any.required': 'Незаполнено обязательное поле',
+    }),
+    duration: Joi.number().required().messages({
+      'any.required': 'Незаполнено обязательное поле',
+    }),
+    year: Joi.number().required().messages({
+      'any.required': 'Незаполнено обязательное поле',
+    }),
+    description: Joi.string().required().messages({
+      'any.required': 'Незаполнено обязательное поле',
+    }),
+    owner: Joi.required().messages({
+      'any.required': 'Незаполнено обязательное поле',
+    }),
+    nameRU: Joi.string().required().messages({
+      'any.required': 'Незаполнено обязательное поле',
+    }),
+    nameEN: Joi.string().required().messages({
+      'any.required': 'Незаполнено обязательное поле',
+    }),
+    // Должно работать, но не работает....
+    // .options({ presence: 'required' })
+    // .messages({
+    //   'any.required': 'Обязательное поле',
+    // }),
+
+  }),
 });
 
 const validateId = celebrate({
@@ -53,18 +110,6 @@ const validateId = celebrate({
   }),
 });
 
-// const validateId = celebrate({
-//   params: Joi.object().keys({
-//     id: Joi.string().required().alphanum().length(24)
-//       .custom((id, helper) => {
-//         if (validator.isAlphanumeric(id)) {
-//           return id;
-//         }
-//         return helper.message('Невалидный Id');
-//       }),
-//   }),
-// });
-
 module.exports = {
-  validateUser, validateMovie, validateId
+  validateUser, validateMovie, validateId, validateAuth,
 };

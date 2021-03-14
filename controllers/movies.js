@@ -1,7 +1,8 @@
-
 const Movie = require('../models/movieModel');
 const { ErrorBadRequest400, ErrorForbidden403, ErrorNotFound404 } = require('../errors/index');
-const { badRequest, movieNotFound, movieNotForbidden, movieDelete } = require('../utils/answers');
+const {
+  badRequest, movieNotFound, movieNotForbidden, movieDelete,
+} = require('../utils/answers');
 
 const createMovie = (req, res, next) => {
   const {
