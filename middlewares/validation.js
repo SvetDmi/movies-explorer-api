@@ -43,6 +43,22 @@ const validateUser = celebrate({
   }).unknown(true),
 });
 
+const validateProfile = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().min(2).max(30)
+      .messages({
+        'string.min': 'Минимум 2 символа',
+        'string.max': 'Максимум 30 символов',
+      }),
+    email: Joi.string().custom((value, helper) => {
+      if (validator.isEmail(value)) {
+        return value;
+      }
+      return helper.message('Невалидный email');
+    }),
+  }).unknown(true),
+});
+
 const validateMovie = celebrate({
   body: Joi.object().keys({
     image: Joi.string().required().custom((value, helper) => {
@@ -111,5 +127,5 @@ const validateId = celebrate({
 });
 
 module.exports = {
-  validateUser, validateMovie, validateId, validateAuth,
+  validateUser, validateMovie, validateId, validateAuth, validateProfile
 };
