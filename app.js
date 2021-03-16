@@ -26,9 +26,11 @@ app.use(express.json());
 
 app.use(routes);
 app.use(errorLogger);
-
 app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(appListen, PORT);
 });
+
+// no-console можно было в файле eslint оставить?
+// Это не ошибка, предупреждение, но без них приятнее, а console.log тут же нужен

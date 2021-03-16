@@ -39,27 +39,27 @@ const createMovie = (req, res, next) => {
       if (!movie) {
         throw new ErrorBadRequest400(badRequest);
       }
-      return res.status(200).send(movie);
+      return res.send(movie);
     })
     .catch(next);
 };
 
 const getMovies = (req, res, next) => {
   Movie.find({}).sort('-nameRU')
-    .then((movies) => res.status(200).send(movies))
+    .then((movies) => res.send(movies))
     .catch(next);
 };
 
 const deleteMovie = (req, res, next) => {
-  Movie.findByIdAndRemove(req.params.movieId)
+  Movie.findById(req.params.movieId)
     .then((movie) => {
       if (!movie) {
         throw new ErrorNotFound404(movieNotFound);
       } else if (JSON.stringify(movie.owner) !== JSON.stringify(req.user.id)) {
         throw new ErrorForbidden403(movieNotForbidden);
       }
-      return res.status(200).send(`${movieDelete} ${movie.nameRU}`);
-      // return res.status(200).send(movie.id);
+      Movie.findByIdAndRemove(req.params.movieId)
+        .then(() => res.send(`${movieDelete} ${movie.nameRU}`));
     })
     .catch(next);
 };

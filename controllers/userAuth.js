@@ -5,7 +5,6 @@ const User = require('../models/userModel.js');
 const { JWT_SECRET, JWT_TIME } = require('../utils/config.js');
 const { emailConflict, authError } = require('../utils/answers');
 
-// const { NODE_ENV, JWT_SECRET } = process.env;
 const {
   ErrorUnauthorized401, ErrorConflict409,
 } = require('../errors/index');
@@ -17,7 +16,6 @@ const createUser = (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        // throw new ErrorConflict409('Уже есть такой email');
         throw new ErrorConflict409(`${user.email} ${emailConflict}`);
       }
       return bcrypt.hash(password, 10);

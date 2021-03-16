@@ -1,4 +1,3 @@
-// require('express-async-errors');
 const User = require('../models/userModel.js');
 const { badRequest } = require('../utils/answers');
 
@@ -7,7 +6,7 @@ const {
 } = require('../errors/index');
 
 const getMe = (req, res, next) => User.findById(req.user.id)
-  .then((user) => res.status(200).send(user))
+  .then((user) => res.send(user))
   .catch(next);
 
 const updateProfile = (req, res, next) => {
@@ -21,7 +20,7 @@ const updateProfile = (req, res, next) => {
       if (!user) {
         throw new ErrorBadRequest400(badRequest);
       }
-      return res.status(200).send(user);
+      return res.send(user);
     })
     .catch(next);
 };

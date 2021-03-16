@@ -10,9 +10,9 @@
       {
         "allow": ["_id"]
       }
-        ],
-    "no-console": "off",
-    "no-unused-vars": "off",
-    "arrow-body-style": ["error", "as-needed"]
+        ]
+    // "no-console": "off",
+    // "no-unused-vars": "off",
+    // "arrow-body-style": ["error", "as-needed"]
   }
 }
