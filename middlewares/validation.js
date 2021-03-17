@@ -38,7 +38,7 @@ const validateUser = celebrate({
         if (validator.isEmail(value)) {
           return value;
         }
-        return helper.message();
+        return helper.message(emailNovalid);
       }),
     password: Joi.string().required().messages({
       'any.required': requiredAnswer,
@@ -68,7 +68,7 @@ const validateMovie = celebrate({
       if (validator.isURL(value)) {
         return value;
       }
-      return helper.message();
+      return helper.message(urlNovalid);
     }),
     trailer: Joi.string().required().custom((value, helper) => {
       if (validator.isURL(value)) {

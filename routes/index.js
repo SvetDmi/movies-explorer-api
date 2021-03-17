@@ -4,12 +4,11 @@ const userAuthRouter = require('./userAuth');
 const usersRouter = require('./users');
 const moviesRouter = require('./movies');
 const auth = require('../middlewares/auth');
-// const { ErrorNotFound404 } = require('../errors/index');
 const { notFound } = require('../utils/answers');
 
 router.use('/', userAuthRouter);
-router.use('/useres', auth, usersRouter);
-router.use('/movies', auth, moviesRouter);
+router.use('/', auth, usersRouter);
+router.use('/', auth, moviesRouter);
 router.use('/crash-test', crashRouter);
 
 router.use('*', (req, res, next) => {

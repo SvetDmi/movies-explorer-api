@@ -6,7 +6,7 @@ const {
 } = require('../errors/index');
 
 const getMe = (req, res, next) => User.findById(req.user.id)
-  .then((user) => res.send(user))
+  .then(({ name, email }) => res.send({ name, email }))
   .catch(next);
 
 const updateProfile = (req, res, next) => {
