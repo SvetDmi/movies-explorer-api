@@ -8,6 +8,7 @@ const { notFound } = require('../utils/answers');
 
 router.use('/', userAuthRouter);
 router.use('/', auth, usersRouter);
+// router.use('/', usersRouter);
 router.use('/', auth, moviesRouter);
 router.use('/crash-test', crashRouter);
 

@@ -103,9 +103,9 @@ const validateMovie = celebrate({
     nameRU: Joi.string().required().messages({
       'any.required': requiredAnswer,
     }),
-    nameEN: Joi.string().required().messages({
-      'any.required': requiredAnswer,
-    }),
+    // nameEN: Joi.string().required().messages({
+    //   'any.required': requiredAnswer,
+    // }),
     // Должно работать, но не работает....
     // .options({ presence: 'required' })
     // .messages({

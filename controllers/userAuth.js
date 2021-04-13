@@ -20,12 +20,15 @@ const createUser = (req, res, next) => {
       }
       return bcrypt.hash(password, 10);
     })
+
     .then((hash) => User.create({
       name, email, password: hash,
     }))
     .then(({ _id, mail }) => {
-      res.send({ _id, mail });
+      const token = jwt.sign({ id: _id }, JWT_SECRET, { expiresIn: JWT_TIME });
+      res.send({ _id, mail, token });
     })
+
     .catch(next);
 };
 

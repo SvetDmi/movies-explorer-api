@@ -44,10 +44,20 @@ const createMovie = (req, res, next) => {
     .catch(next);
 };
 
-const getMovies = (req, res, next) => {
-  Movie.find({}).sort('-nameRU')
-    .then((movies) => res.send(movies))
-    .catch(next);
+// const getMovies = (req, res, next) => {
+//   Movie.find({ owner: req.user.id })
+//     .then((movies) => res.send(movies))
+//     .catch(next);
+// };
+
+const getMovies = async (req, res, next) => {
+  try {
+    const owner = req.user.id;
+    const savedMovies = await Movie.find({ owner });
+    res.send(savedMovies);
+  } catch (err) {
+    next(err);
+  }
 };
 
 const deleteMovie = (req, res, next) => {
@@ -59,7 +69,8 @@ const deleteMovie = (req, res, next) => {
         throw new ErrorForbidden403(movieNotForbidden);
       }
       Movie.findByIdAndRemove(req.params.movieId)
-        .then(() => res.send(`${movieDelete} ${movie.nameRU}`));
+        // .then(() => res.send(`${movieDelete} ${movie.nameRU}`));
+        .then(() => res.send(movie));
     })
     .catch(next);
 };
